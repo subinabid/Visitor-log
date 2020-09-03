@@ -1,0 +1,17 @@
+{% extends 'base-min.html' %}
+{% load static %}
+<!doctype html>
+{% block content %}
+<main>
+  <div class="figure">
+    <form method="post">{% csrf_token %}
+      <table>
+        {{ form.as_table }}
+      </table>
+      <div class="form-row">
+        <button type="submit" class = "button">Login</button>
+      </div>
+    </form>
+  </div>
+</main>
+{% endblock %}
