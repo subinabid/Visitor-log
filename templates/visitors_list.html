@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+<!doctype html>
+
+{% block content %}
+<main>
+  <div class="figure">
+    {% if user.is_authenticated %}
+      {% now "jS F Y H:i" %}
+      <table>
+        <tr>
+          <th>Emp ID</th>
+          <th>Name</th>
+          <th>Designation</th>
+          <th>Department</th>
+          <th>Location</th>
+          <th>Remarks</th>
+          <th>Edit</th>
+        </tr>
+        {%for i in NTPCUserList%}
+          <tr>
+            <td>{{i.empid}}</td>
+            <td>{{i.fname}} {{i.mname}} {{i.lname}}</td>
+            <td>{{i.designation}}</td>
+            <td>{{i.department}}</td>
+            <td>{{i.location}}</td>
+            <td>{{i.remarks}}</td>
+            <td><a href="edit/{{i.id}}">edit</a></td>
+          </tr>
+        {%endfor%}
+      </table>  
+    {% else %}
+      <p>Not logged in</p>
+      <p>You may <a href="{% url 'login' %}">login</a> to use the system</p>
+    {% endif %}
+  </div>
+</main>
+{% endblock %}

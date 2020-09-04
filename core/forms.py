@@ -4,7 +4,7 @@ from .models import ntpcusers
 class Visitors(forms.ModelForm):
     class Meta:
         model = ntpcusers
-        fields = ('empid', 'fname','mname','lname','designation','department','Remarks' )        
+        fields = ('empid', 'fname','mname','lname','designation','department','location','remarks' )        
 
 
 
