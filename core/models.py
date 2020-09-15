@@ -9,10 +9,15 @@ class ntpcusers(models.Model):
     department = models.CharField(max_length=50, blank=True)
     location = models.CharField(max_length=50, blank=True)
     remarks = models.CharField(max_length=50, blank=True)
+    def __str__(self):
+        return str(self.empid)
 
 class ntpcvisitors(models.Model):
     empid = models.ForeignKey(ntpcusers, on_delete= models.SET("DEL"))
     timein = models.DateTimeField()
     timeout = models.DateTimeField()
-    subject = models.TextField()
-    remarks = models.TextField()
+    subject = models.CharField(max_length=200, blank=True)
+    remarks = models.TextField(blank=True)
+    def __str__(self):
+        return str(self.empid)
+    
