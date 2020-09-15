@@ -28,3 +28,6 @@ def visitors_list(request):
 def visitors_edit(request,int):
     context = {'NTPCUserList':ntpcusers.objects.all()}
     return render(request, 'visitors_list.html', context )
+
+def meetings(request):
+    return HttpResponse ("meetings")  

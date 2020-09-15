@@ -68,11 +68,10 @@ main p {
 footer {
     padding: 25px 0;
     position: fixed;
-    left: 50%;
+    left: 0;
+    right: 0;
     bottom: 0;
     width: 960px;
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
     -webkit-transform-style: preserve-3d;
     transform-style: preserve-3d;
     border-top: 1px solid #efefef;
