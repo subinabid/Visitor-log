@@ -1,8 +1,4 @@
-html, body {
-  margin: 0 auto;
-  color: #525252;
-  font-family: Roboto, sans-serif;
-}
+body, main {margin: 0 auto;}
 html {
     line-height: 1.15;
     -ms-text-size-adjust: 100%;
@@ -16,14 +12,18 @@ a {
     color: #19865C;
     text-decoration: none;
   }
-
+body {
+    max-width: 960px;
+    color: #525252;
+    font-family: Roboto, sans-serif;
+  }
+main {text-align: center;}
+.u-clearfix:after { content: ""; clear: both; display: table; }
 h1, h2, h3, h4, h5, p, ul {
     padding: 0;
     margin: 0;
     font-weight: 400;
   }
-
-/* Header items */
 header {
     padding-top: 20px; padding-bottom: 10px;
     border-bottom: 1px solid #efefef;
@@ -32,10 +32,7 @@ header {
 .logo h2 { font-weight: 700; margin-top: 0px;}
 .release-notes { float: right; margin-top: 7px;}
 .release-notes p {font-size: 14px;}
-.u-clearfix:after { content: ""; clear: both; display: table; }
-
-/* Main Content */
-main {text-align: center;}
+  
 .figure { margin-top: 24px; height: 181px;}
 .figure__animation {
     max-width: 265px;
