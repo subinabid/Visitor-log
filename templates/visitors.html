@@ -6,10 +6,12 @@
 <main>
   <div class="container">
     {% if user.is_authenticated %}
+      <br>
       {% now "jS F Y H:i" %}
-      <p>{{noOfNTPCVisitors}} Registered Visitors</p>
-      <p><a href="add"> Add a user</a></p>
-      <p><a href="list"> View User list</a></p>
+      <p>{{NoOfVisitors}} Registered Visitors</p>
+      <p>{{NoOfNtpcVisitors}} Internal | {{NoOfExternalVisitors}} External</p>
+      <p>Add a Visitor - <a href="{% url 'visitors_add_internal' %}">Internal</a> | <a href="{% url 'visitors_add_external' %}">External</a></p>
+      <p>View Visitors list - <a href="{% url 'visitors_list_internal' %}">Internal</a> | <a href="{% url 'visitors_list_external' %}">External</a></p>
     {% else %}
       <p>Not logged in</p>
       <p>You may <a href="{% url 'login' %}">login</a> to use the system</p>
@@ -17,5 +19,3 @@
   </div>
 </main>
 {% endblock %}
-
-

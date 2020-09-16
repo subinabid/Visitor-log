@@ -1,51 +1,91 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.db.models import F
 from datetime import datetime
 import datetime as dt
-from .forms import Visitors, Meetings
-from .models import ntpcusers,ntpcvisitors
-
+from .forms import NTPCVisitors, ExternalVisitors, Meeting
+from .models import ntpcuser, externaluser, meeting, visitor
 #############################################################################################
+
+######################### Visitors ################################################
 def visitors(request):
     context = {
-        'noOfNTPCVisitors':ntpcusers.objects.count()
+        'NoOfVisitors':visitor.objects.count(),
+        'NoOfNtpcVisitors':ntpcuser.objects.count(),
+        'NoOfExternalVisitors':externaluser.objects.count(),
     }
     return render(request, 'visitors.html', context )
 
-def visitors_add(request):
+######################### Visitors - add NTPC visitor ##############################
+def visitors_add_internal(request):
     if request.method == 'POST':
-        form = Visitors(request.POST)
+        form = NTPCVisitors(request.POST)
         useradded = form.save()
-        form = Visitors()
+        v = visitor(ntpcuser = useradded, source = "NTPC")
+        v.save()
+
+        form = NTPCVisitors()
         context = {'form':form, 'added':useradded }
         return render(request, 'visitors_add.html', context )
+        # replace with return redirect, message 
     else:
-        form = Visitors()
+        form = NTPCVisitors()
         context = {'form':form }
         return render(request, 'visitors_add.html', context )
 
-def visitors_list(request):
-    context = {'NTPCUserList':ntpcusers.objects.all()}
+######################### Visitors - add External visitor ##########################
+def visitors_add_external(request):
+    if request.method == 'POST':
+        form = ExternalVisitors(request.POST)
+        useradded = form.save()
+        v = visitor(externaluser = useradded, source = "Ext")
+        v.save()
+
+        form = ExternalVisitors()
+        context = {'form':form, 'added':useradded }
+        return render(request, 'visitors_add.html', context )
+        # replace with return redirect + message 
+    else:
+        form = ExternalVisitors()
+        context = {'form':form }
+        return render(request, 'visitors_add.html', context )
+
+######################### Visitors - List - Internal ###############################    
+def visitors_list_internal(request):
+    context = {
+        'visitorList':ntpcuser.objects.all(),
+        'source':"NTPC"
+    }
     return render(request, 'visitors_list.html', context )
 
+######################### Visitors - List - external ###############################    
+def visitors_list_external(request):
+    context = {
+        'visitorList':externaluser.objects.all(),
+        'source':"Ext"
+    }
+    return render(request, 'visitors_list.html', context )
+
+######################### Visitors - Edit ########################################## 
 def visitors_edit(request,int):
-    context = {'NTPCUserList':ntpcusers.objects.all()}
+    context = {'NTPCUserList':ntpcuser.objects.all()}
     return render(request, 'visitors_list.html', context )
 
+######################### Meetings ##############################
 def meetings(request):
     context = {
-        'meetings':ntpcvisitors.objects.filter(timein__date = dt.date.today())
+        'meetings':meeting.objects.filter(timein__date = dt.date.today()).select_related('visitor').annotate(source = F('visitor__source'))
     }
     return render(request, 'meetings.html', context )
 
 def meetings_add(request):
     if request.method == 'POST':
-        form = Meetings(request.POST)
+        form = Meeting(request.POST)
         meeting_added = form.save()
-        form = Meetings(initial={'timein':datetime.now, 'timeout':datetime.now})
+        form = Meeting(initial={'timein':datetime.now, 'timeout':datetime.now})
         context = {'form':form, 'added':meeting_added  }
         return render(request, 'meetings_add.html', context )
     else:
-        form = Meetings(initial={'timein':datetime.now, 'timeout':datetime.now})
+        form = Meeting(initial={'timein':datetime.now, 'timeout':datetime.now})
         context = {'form':form }
         return render(request, 'meetings_add.html', context )

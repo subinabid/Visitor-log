@@ -1,15 +1,20 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
-from .models import ntpcusers, ntpcvisitors
+from .models import ntpcuser, externaluser, meeting
 
-class Visitors(forms.ModelForm):
+class NTPCVisitors(forms.ModelForm):
     class Meta:
-        model = ntpcusers
+        model = ntpcuser
         fields = ('empid', 'fname','mname','lname','designation','department','location','remarks' )        
 
-class Meetings(forms.ModelForm):
+class ExternalVisitors(forms.ModelForm):
     class Meta:
-        model = ntpcvisitors
+        model = externaluser
+        fields = '__all__'
+
+class Meeting(forms.ModelForm):
+    class Meta:
+        model = meeting
         fields = '__all__'
         labels = {
             'empid' : _('Employee ID'),
@@ -20,4 +25,3 @@ class Meetings(forms.ModelForm):
             'timein': forms.SplitDateTimeField,
             'timeout': forms.SplitDateTimeField,
         }
-

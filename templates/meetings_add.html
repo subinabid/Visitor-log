@@ -4,7 +4,7 @@
 
 {% block content %}
 <main>
-  <div class="figure">
+  <div class="container">
     {% if user.is_authenticated %}
       {% now "jS F Y H:i" %}
       <form method="post"> {% csrf_token %}
@@ -12,7 +12,7 @@
         <button type="submit">Save</button>
       </form>
       {% if added %}<p>{{added}}'s Meeting Added</p>{%endif%}
-      <p>If employee is not added as a visitor already, you can add it <a href="{% url 'visitors_add' %}">here</a></p>
+      <p>If the visitor is not added already, you can add it here <a href="{% url 'visitors_add_internal'%}">Internal</a> | <a href="{% url 'visitors_add_external'%}">External</a></p>
     {% else %}
       <p>Not logged in</p>
       <p>You may <a href="{% url 'login' %}">login</a> to use the system</p>

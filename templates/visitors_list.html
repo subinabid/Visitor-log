@@ -7,32 +7,59 @@
   <div class="container">
     {% if user.is_authenticated %}
     <br>
-      <div class="table-responsive">
-      <table class="table table-striped table-sm" id="visitorstable">
-        <thead>
-        <tr>
-          <th>Emp ID</th>
-          <th>Name</th>
-          <th>Designation</th>
-          <th>Department</th>
-          <th>Location</th>
-          <th>Remarks</th>
-          <th>Edit</th>
-        </tr>
-      </thead>
-        {%for i in NTPCUserList%}
+      {% if source == "NTPC" %}
+        <div class="table-responsive">
+        <table class="table table-striped table-sm" id="visitorstable">
+          <thead>
           <tr>
-            <td>{{i.empid}}</td>
-            <td>{{i.fname}} {{i.mname}} {{i.lname}}</td>
-            <td>{{i.designation}}</td>
-            <td>{{i.department}}</td>
-            <td>{{i.location}}</td>
-            <td>{{i.remarks}}</td>
-            <td><a href="edit/{{i.id}}">edit</a></td>
+            <th>Sl</th>
+            <th>Name</th>
+            <th>Designation</th>
+            <th>Department</th>
+            <th>Remarks</th>
+            <th>Edit</th>
           </tr>
-        {%endfor%}
-      </table>  
-      </div>
+        </thead>
+          {%for i in visitorList%}
+            <tr>
+              <td>{{forloop.counter}}</td>
+              <td>{{i.fname}} {{i.mname}} {{i.lname}}</td>
+              <td>{{i.designation}}</td>
+              <td>{{i.department}}</td>
+              <td>{{i.remarks}}</td>
+              <td><a href="edit/{{i.id}}">edit</a></td>
+            </tr>
+          {%endfor%}
+        </table>  
+        </div>
+      {% elif source == "Ext" %}
+        <div class="table-responsive">
+        <table class="table table-striped table-sm" id="visitorstable">
+          <thead>
+          <tr>
+            <th>Sl</th>
+            <th>Name</th>
+            <th>From</th>
+            <th>Designation</th>
+            <th>Department</th>
+            <th>Remarks</th>
+            <th>Edit</th>
+          </tr>
+        </thead>
+          {%for i in visitorList%}
+            <tr>
+              <td>{{forloop.counter}}</td>
+              <td>{{i.fname}} {{i.mname}} {{i.lname}}</td>
+              <td>{{i.company}}</td>
+              <td>{{i.designation}}</td>
+              <td>{{i.department}}</td>
+              <td>{{i.remarks}}</td>
+              <td><a href="edit/{{i.id}}">edit</a></td>
+            </tr>
+          {%endfor%}
+        </table> 
+        </div>
+      {% endif %}
     {% else %}
       <p>Not logged in</p>
       <p>You may <a href="{% url 'login' %}">login</a> to use the system</p>
